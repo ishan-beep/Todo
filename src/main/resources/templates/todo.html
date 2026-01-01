@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})" >
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<section>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between mb-3">
+            <h2>Todo List</h2>
+            <a th:href="@{/todo/new}" class="btn btn-primary">+ Add Todo</a>
+        </div>
 
+        <table class="table table-bordered table-hover bg-white">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="todo : ${todos}">
+                <-- todos here represent the multiple data accessing here -->
+                <td th:text="${todo.id}"></td>
+                <td th:text="${todo.title}"></td>
+                <td>
+                <span th:text="${todo.completed ? 'Completed' : 'Pending'}"
+                      th:classappend="${todo.completed ? 'text-success' : 'text-warning'}"></span>
+                </td>
+                <td>
+                    <a th:href="@{/todo/edit/{id}(id=${todo.id})}" class="btn btn-sm btn-warning">Edit</a>
+                    <a th:href="@{/todo/delete/{id}(id=${todo.id})}"
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('Delete this todo?')">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
 </body>
 </html>
