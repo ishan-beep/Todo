@@ -11,8 +11,16 @@
             <h2>Todo List</h2>
             <a th:href="@{/todo/new}" class="btn btn-primary">+ Add Todo</a>
         </div>
+        <div class="row mb-3">
+            <div class="col-md-4 ms-auto">
+                <input type="text"
+                       class="form-control"
+                       placeholder="🔍 Search todo..."
+                       id="todosearch">
+            </div>
+        </div>
 
-        <table class="table table-bordered table-hover bg-white">
+        <table class="table table-bordered table-hover bg-white" id="todotable" >
             <thead class="table-dark">
             <tr>
                 <th>ID</th>
@@ -40,6 +48,18 @@
             </tbody>
         </table>
     </div>
+    <script>
+        document.getElementById("todosearch").addEventListener("keyup", function () {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll("#todotable tbody tr");
+
+            rows.forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(filter)
+                    ? ""
+                    : "none";
+            });
+        });
+    </script>
 </section>
 </body>
 </html>
